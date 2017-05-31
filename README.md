@@ -10,3 +10,5 @@ The command line will take in the directory for the photos and the total number 
   where the directory of the pictures would be User/Photos, and there would be 15 jpgs in total
 
 The script will then output in a new folder in the directory a KML and a txt file containing a list of all the photos without exif data.
+
+Note that exifread is not a standard python package and must be installed
