@@ -2,6 +2,7 @@ import exifread as exif
 import base64
 import sys
 import os
+import glob
 
 lat = []
 lon = []
@@ -11,21 +12,20 @@ time = []
 tags = []
 encoded_images = []
 noexif = []
-number_of_photos = int(sys.argv[2])
 location = sys.argv[1]
 index = 0
 
 #Makes an array of the certain EXIF values of the Photos, specifically date and time and lat and lon for photos with EXIF
 
-for i in range(number_of_photos):
-    photo = open('%s/Photo (%s).jpg' %(location,i+1), 'rb')
+for photos in glob.glob('*.jpg'):
+    photo = open(photos, 'rb')
     exifdata = exif.process_file(photo, details=False)
     if bool(exifdata) == True:    
         tags.append(exifdata)
     else:
         noexif.append(i)
         continue
-    with open('%s/Photo (%s).jpg' %(location,i+1), 'rb') as pic:
+    with open(photos, 'rb') as pic:
         encoded = base64.b64encode(pic.read())
     encoded_images.append(encoded)
     date = tags[index]['EXIF DateTimeOriginal'].__dict__
